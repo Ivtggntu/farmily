@@ -1,0 +1,14 @@
+{% extends "hack_app/layout.html" %}
+
+{% block body %}
+    {% if user.profile.profession == "farmer" %}
+        <h2>Выложить товар</h2>
+        <div class="form">
+            <form action="{% url 'profile-create' user.pk %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form}}
+                <input type="submit">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

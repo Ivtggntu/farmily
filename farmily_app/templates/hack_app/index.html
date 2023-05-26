@@ -1,0 +1,40 @@
+{% extends "hack_app/layout.html" %}
+
+{% block body %}
+    <h2>Продукты</h2>
+        <p class="category-name">Категория: </p>
+        <form action="{% url 'index' %}" method="post">
+            {% csrf_token %}
+            <select name="category" id="category">
+                <option value="Pastry">Мучное</option>
+                <option value="Meat">Мясо</option>
+                <option value="Fruits">Фрукты</option>
+                <option value="Vegetables">Овощи</option>
+                <option value="Dairy">Молочные продукты</option>
+            </select>
+            <input type="submit" value="Выбрать">
+        </form>
+        <ul class="product-list">
+            {% for product in products %}
+                <li class="product-item">
+                    <img class="image" src="{{ product.image.url }}" alt="image" width="200">
+                    <h3 class="product-title">
+                        {{ product.title }}
+                    </h3>
+                    <p class="product-category">
+                        Категория: {{ product.category }}
+                    </p>
+                    <p class="product-description">
+                        Описание: {{ product.description }}
+                    </p>
+                    <p class="product-price">
+                        Цена: {{ product.price }}руб.
+                    </p>
+                    <a href=""><button class="buy">Купить</button></a>
+                    <hr>
+                </li>
+            {% empty %}
+                <li class="product-item">Пока нет продуктов</li>
+            {% endfor %}
+        </ul>
+{% endblock %}

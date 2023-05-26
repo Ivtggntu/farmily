@@ -1,0 +1,36 @@
+{% extends "hack_app/layout.html" %}
+
+{% block body %}
+    {% if user.profile.profession == "farmer" %}
+        <form action="{% url 'profile-create' user.pk %}">
+            <input type="submit" value="Добавить товар">
+        </form>
+        <h2>Мои товары</h2>
+        <ul class="product-list">
+        {% for product in products %}
+            <li class="product-item">
+                <img src="{{ product.image.url }}" alt="image" width="200">
+                <h3 class="product-title">
+                    {{ product.title }}
+                </h3>
+                <p class="product-category">
+                    Категория: {{ product.category }}
+                </p>
+                <p class="product-description">
+                    Описание: {{ product.description }}
+                </p>
+                <p class="product-price">
+                    Цена: {{ product.price }}руб.
+                </p>
+                <form action="{% url 'profile-edit' user.pk product.pk %}">
+                    <input type="submit" value="Редактировать">
+                </form>
+                <button>Удалить</button>
+                <hr>
+            </li>
+        {% empty %}
+            <li class="product-item">Пока нет продуктов</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

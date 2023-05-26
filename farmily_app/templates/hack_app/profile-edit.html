@@ -1,0 +1,27 @@
+{% extends "hack_app/layout.html" %}
+
+{% block body %}
+    {% if user.profile.profession == "farmer" %}
+        <h2>Редактировать товар "{{product.title}}"</h2>
+        <div class="form">
+            <form action="{% url 'profile-edit' user.pk product.pk %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="id_title">Название:</label>
+                <input type="text" name="title" maxlength="100" required="" id="id_title" value="{{ product.title }}">
+                <label for="id_description">Описание:</label>
+                <textarea name="description" cols="40" rows="10" required="" id="id_description">{{ product.description }}</textarea>
+                <label for="id_price">Цена:</label>
+                <input type="number" name="price" step="0.01" id="id_price" value="{{ product.price }}">
+                <label for="id_category">Категория</label>
+                <select name="category" id="id_category">
+                    <option value="Fruits">Фрукты</option>
+                    <option value="Vegetables">Овощи</option>
+                    <option value="Pastry">Выпечка</option>
+                    <option value="Meat">Мясные продукта</option>
+                    <option value="Dairy">Молочные продукты</option>
+                </select>
+                <input type="submit">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
